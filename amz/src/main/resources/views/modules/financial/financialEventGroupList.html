@@ -1,0 +1,179 @@
+<% layout('/layouts/default.html', {title: 'financial_event_group管理', libs: ['dataGrid']}){ %>
+<div class="main-content">
+	<div class="box box-main">
+		<div class="box-header">
+			<div class="box-title">
+				<i class="fa fa-list-alt"></i> ${text('financial_event_group管理')}
+			</div>
+			<div class="box-tools pull-right">
+				<a href="#" class="btn btn-default" id="btnSearch" title="${text('查询')}"><i class="fa fa-filter"></i> ${text('查询')}</a>
+				<% if(hasPermi('financial:financialEventGroup:edit')){ %>
+					<a href="${ctx}/financial/financialEventGroup/form" class="btn btn-default btnTool" title="${text('新增financial_event_group')}"><i class="fa fa-plus"></i> ${text('新增')}</a>
+				<% } %>
+			</div>
+		</div>
+		<div class="box-body">
+			<#form:form id="searchForm" model="${financialEventGroup}" action="${ctx}/financial/financialEventGroup/listData" method="post" class="form-inline hide"
+					data-page-no="${parameter.pageNo}" data-page-size="${parameter.pageSize}" data-order-by="${parameter.orderBy}">
+				<div class="form-group">
+					<label class="control-label">store_name：</label>
+					<div class="control-inline">
+						<#form:input path="storeName" maxlength="255" class="form-control width-120"/>
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="control-label">group_id：</label>
+					<div class="control-inline">
+						<#form:input path="groupId" maxlength="64" class="form-control width-120"/>
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="control-label">processing_status：</label>
+					<div class="control-inline">
+						<#form:input path="processingStatus" maxlength="64" class="form-control width-120"/>
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="control-label">download_status：</label>
+					<div class="control-inline">
+						<#form:input path="downloadStatus" maxlength="255" class="form-control width-120"/>
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="control-label">fund_transfer_status：</label>
+					<div class="control-inline">
+						<#form:input path="fundTransferStatus" maxlength="64" class="form-control width-120"/>
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="control-label">original_total_currency：</label>
+					<div class="control-inline">
+						<#form:input path="originalTotalCurrency" maxlength="64" class="form-control width-120"/>
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="control-label">original_total_amount：</label>
+					<div class="control-inline">
+						<#form:input path="originalTotalAmount" maxlength="64" class="form-control width-120"/>
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="control-label">converted_total_currency：</label>
+					<div class="control-inline">
+						<#form:input path="convertedTotalCurrency" maxlength="64" class="form-control width-120"/>
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="control-label">converted_total_amount：</label>
+					<div class="control-inline">
+						<#form:input path="convertedTotalAmount" maxlength="64" class="form-control width-120"/>
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="control-label">fund_transfer_date：</label>
+					<div class="control-inline">
+						<#form:input path="fundTransferDate" maxlength="64" class="form-control width-120"/>
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="control-label">trance_id：</label>
+					<div class="control-inline">
+						<#form:input path="tranceId" maxlength="64" class="form-control width-120"/>
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="control-label">account_tail：</label>
+					<div class="control-inline">
+						<#form:input path="accountTail" maxlength="64" class="form-control width-120"/>
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="control-label">beginning_balance_currency：</label>
+					<div class="control-inline">
+						<#form:input path="beginningBalanceCurrency" maxlength="64" class="form-control width-120"/>
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="control-label">beginning_balance_amount：</label>
+					<div class="control-inline">
+						<#form:input path="beginningBalanceAmount" maxlength="64" class="form-control width-120"/>
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="control-label">group_start：</label>
+					<div class="control-inline">
+						<#form:input path="groupStart" maxlength="64" class="form-control width-120"/>
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="control-label">group_end：</label>
+					<div class="control-inline">
+						<#form:input path="groupEnd" maxlength="64" class="form-control width-120"/>
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="control-label">status：</label>
+					<div class="control-inline width-120">
+						<#form:select path="status" dictType="sys_search_status" blankOption="true" class="form-control"/>
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="control-label">remarks：</label>
+					<div class="control-inline">
+						<#form:input path="remarks" maxlength="255" class="form-control width-120"/>
+					</div>
+				</div>
+				<div class="form-group">
+					<button type="submit" class="btn btn-primary btn-sm">${text('查询')}</button>
+					<button type="reset" class="btn btn-default btn-sm">${text('重置')}</button>
+				</div>
+			</#form:form>
+			<table id="dataGrid"></table>
+			<div id="dataGridPage"></div>
+		</div>
+	</div>
+</div>
+<% } %>
+<script>
+// 初始化DataGrid对象
+$('#dataGrid').dataGrid({
+	searchForm: $("#searchForm"),
+	columnModel: [
+		{header:'store_name', name:'storeName', index:'a.store_name', width:150, align:"left", frozen:true, formatter: function(val, obj, row, act){
+			return '<a href="${ctx}/financial/financialEventGroup/form?code='+row.code+'" class="btnList" data-title="${text('编辑financial_event_group')}">'+(val||row.id)+'</a>';
+		}},
+		{header:'group_id', name:'groupId', index:'a.group_id', width:150, align:"left"},
+		{header:'processing_status', name:'processingStatus', index:'a.processing_status', width:150, align:"left"},
+		{header:'download_status', name:'downloadStatus', index:'a.download_status', width:150, align:"left"},
+		{header:'fund_transfer_status', name:'fundTransferStatus', index:'a.fund_transfer_status', width:150, align:"left"},
+		{header:'original_total_currency', name:'originalTotalCurrency', index:'a.original_total_currency', width:150, align:"left"},
+		{header:'original_total_amount', name:'originalTotalAmount', index:'a.original_total_amount', width:150, align:"left"},
+		{header:'converted_total_currency', name:'convertedTotalCurrency', index:'a.converted_total_currency', width:150, align:"left"},
+		{header:'converted_total_amount', name:'convertedTotalAmount', index:'a.converted_total_amount', width:150, align:"left"},
+		{header:'fund_transfer_date', name:'fundTransferDate', index:'a.fund_transfer_date', width:150, align:"left"},
+		{header:'trance_id', name:'tranceId', index:'a.trance_id', width:150, align:"left"},
+		{header:'account_tail', name:'accountTail', index:'a.account_tail', width:150, align:"left"},
+		{header:'beginning_balance_currency', name:'beginningBalanceCurrency', index:'a.beginning_balance_currency', width:150, align:"left"},
+		{header:'beginning_balance_amount', name:'beginningBalanceAmount', index:'a.beginning_balance_amount', width:150, align:"left"},
+		{header:'group_start', name:'groupStart', index:'a.group_start', width:150, align:"left"},
+		{header:'group_end', name:'groupEnd', index:'a.group_end', width:150, align:"left"},
+		{header:'status', name:'status', index:'a.status', width:150, align:"center", formatter: function(val, obj, row, act){
+			return js.getDictLabel(${@DictUtils.getDictListJson('sys_search_status')}, val, '${text('未知')}', true);
+		}},
+		{header:'create_date', name:'createDate', index:'a.create_date', width:150, align:"center"},
+		{header:'remarks', name:'remarks', index:'a.remarks', width:150, align:"left"},
+		{header:'${text('操作')}', name:'actions', width:120, sortable:false, title:false, formatter: function(val, obj, row, act){
+			var actions = [];
+			<% if(hasPermi('financial:financialEventGroup:edit')){ %>
+				actions.push('<a href="${ctx}/financial/financialEventGroup/form?code='+row.code+'" class="btnList" title="${text('编辑financial_event_group')}"><i class="fa fa-pencil"></i></a>&nbsp;');
+				actions.push('<a href="${ctx}/financial/financialEventGroup/delete?code='+row.code+'" class="btnList" title="${text('删除financial_event_group')}" data-confirm="${text('确认要删除该financial_event_group吗？')}"><i class="fa fa-trash-o"></i></a>&nbsp;');
+			<% } %>
+			return actions.join('');
+		}}
+	],
+	// 加载成功后执行事件
+	ajaxSuccess: function(data){
+		
+	}
+});
+</script>

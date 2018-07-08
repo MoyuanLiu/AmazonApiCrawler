@@ -1,0 +1,235 @@
+<% layout('/layouts/default.html', {title: 'settlement_report管理', libs: ['dataGrid']}){ %>
+<div class="main-content">
+	<div class="box box-main">
+		<div class="box-header">
+			<div class="box-title">
+				<i class="fa fa-list-alt"></i> ${text('settlement_report管理')}
+			</div>
+			<div class="box-tools pull-right">
+				<a href="#" class="btn btn-default" id="btnSearch" title="${text('查询')}"><i class="fa fa-filter"></i> ${text('查询')}</a>
+				<% if(hasPermi('settlement:settlementReport:edit')){ %>
+					<a href="${ctx}/settlement/settlementReport/form" class="btn btn-default btnTool" title="${text('新增settlement_report')}"><i class="fa fa-plus"></i> ${text('新增')}</a>
+				<% } %>
+			</div>
+		</div>
+		<div class="box-body">
+			<#form:form id="searchForm" model="${settlementReport}" action="${ctx}/settlement/settlementReport/listData" method="post" class="form-inline hide"
+					data-page-no="${parameter.pageNo}" data-page-size="${parameter.pageSize}" data-order-by="${parameter.orderBy}">
+				<div class="form-group">
+					<label class="control-label">settlement_id：</label>
+					<div class="control-inline">
+						<#form:input path="settlementId" maxlength="255" class="form-control width-120"/>
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="control-label">settlement_start_date：</label>
+					<div class="control-inline">
+						<#form:input path="settlementStartDate" maxlength="255" class="form-control width-120"/>
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="control-label">settlement_end_date：</label>
+					<div class="control-inline">
+						<#form:input path="settlementEndDate" maxlength="255" class="form-control width-120"/>
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="control-label">deposit_date：</label>
+					<div class="control-inline">
+						<#form:input path="depositDate" maxlength="255" class="form-control width-120"/>
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="control-label">total_amount：</label>
+					<div class="control-inline">
+						<#form:input path="totalAmount" maxlength="255" class="form-control width-120"/>
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="control-label">currency：</label>
+					<div class="control-inline">
+						<#form:input path="currency" maxlength="255" class="form-control width-120"/>
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="control-label">transaction_type：</label>
+					<div class="control-inline">
+						<#form:input path="transactionType" maxlength="255" class="form-control width-120"/>
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="control-label">order_id：</label>
+					<div class="control-inline">
+						<#form:input path="orderId" maxlength="255" class="form-control width-120"/>
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="control-label">merchant_order_id：</label>
+					<div class="control-inline">
+						<#form:input path="merchantOrderId" maxlength="255" class="form-control width-120"/>
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="control-label">adjustment_id：</label>
+					<div class="control-inline">
+						<#form:input path="adjustmentId" maxlength="255" class="form-control width-120"/>
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="control-label">shipment_id：</label>
+					<div class="control-inline">
+						<#form:input path="shipmentId" maxlength="255" class="form-control width-120"/>
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="control-label">marketplace_name：</label>
+					<div class="control-inline">
+						<#form:input path="marketplaceName" maxlength="255" class="form-control width-120"/>
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="control-label">amount_type：</label>
+					<div class="control-inline">
+						<#form:input path="amountType" maxlength="255" class="form-control width-120"/>
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="control-label">amount_description：</label>
+					<div class="control-inline">
+						<#form:input path="amountDescription" maxlength="255" class="form-control width-120"/>
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="control-label">amount：</label>
+					<div class="control-inline">
+						<#form:input path="amount" maxlength="255" class="form-control width-120"/>
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="control-label">fulfillment_id：</label>
+					<div class="control-inline">
+						<#form:input path="fulfillmentId" maxlength="255" class="form-control width-120"/>
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="control-label">posted_date：</label>
+					<div class="control-inline">
+						<#form:input path="postedDate" maxlength="255" class="form-control width-120"/>
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="control-label">posted_date_time：</label>
+					<div class="control-inline">
+						<#form:input path="postedDateTime" maxlength="255" class="form-control width-120"/>
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="control-label">order_item_code：</label>
+					<div class="control-inline">
+						<#form:input path="orderItemCode" maxlength="255" class="form-control width-120"/>
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="control-label">merchant_order_item_id：</label>
+					<div class="control-inline">
+						<#form:input path="merchantOrderItemId" maxlength="255" class="form-control width-120"/>
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="control-label">merchant_adjustment_item_id：</label>
+					<div class="control-inline">
+						<#form:input path="merchantAdjustmentItemId" maxlength="255" class="form-control width-120"/>
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="control-label">sku：</label>
+					<div class="control-inline">
+						<#form:input path="sku" maxlength="255" class="form-control width-120"/>
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="control-label">quantity_purchased：</label>
+					<div class="control-inline">
+						<#form:input path="quantityPurchased" maxlength="255" class="form-control width-120"/>
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="control-label">promotion_id：</label>
+					<div class="control-inline">
+						<#form:input path="promotionId" maxlength="255" class="form-control width-120"/>
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="control-label">status：</label>
+					<div class="control-inline width-120">
+						<#form:select path="status" dictType="sys_search_status" blankOption="true" class="form-control"/>
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="control-label">remarks：</label>
+					<div class="control-inline">
+						<#form:input path="remarks" maxlength="255" class="form-control width-120"/>
+					</div>
+				</div>
+				<div class="form-group">
+					<button type="submit" class="btn btn-primary btn-sm">${text('查询')}</button>
+					<button type="reset" class="btn btn-default btn-sm">${text('重置')}</button>
+				</div>
+			</#form:form>
+			<table id="dataGrid"></table>
+			<div id="dataGridPage"></div>
+		</div>
+	</div>
+</div>
+<% } %>
+<script>
+// 初始化DataGrid对象
+$('#dataGrid').dataGrid({
+	searchForm: $("#searchForm"),
+	columnModel: [
+		{header:'settlement_id', name:'settlementId', index:'a.settlement_id', width:150, align:"left", frozen:true, formatter: function(val, obj, row, act){
+			return '<a href="${ctx}/settlement/settlementReport/form?code='+row.code+'" class="btnList" data-title="${text('编辑settlement_report')}">'+(val||row.id)+'</a>';
+		}},
+		{header:'settlement_start_date', name:'settlementStartDate', index:'a.settlement_start_date', width:150, align:"left"},
+		{header:'settlement_end_date', name:'settlementEndDate', index:'a.settlement_end_date', width:150, align:"left"},
+		{header:'deposit_date', name:'depositDate', index:'a.deposit_date', width:150, align:"left"},
+		{header:'total_amount', name:'totalAmount', index:'a.total_amount', width:150, align:"left"},
+		{header:'currency', name:'currency', index:'a.currency', width:150, align:"left"},
+		{header:'transaction_type', name:'transactionType', index:'a.transaction_type', width:150, align:"left"},
+		{header:'order_id', name:'orderId', index:'a.order_id', width:150, align:"left"},
+		{header:'merchant_order_id', name:'merchantOrderId', index:'a.merchant_order_id', width:150, align:"left"},
+		{header:'adjustment_id', name:'adjustmentId', index:'a.adjustment_id', width:150, align:"left"},
+		{header:'shipment_id', name:'shipmentId', index:'a.shipment_id', width:150, align:"left"},
+		{header:'marketplace_name', name:'marketplaceName', index:'a.marketplace_name', width:150, align:"left"},
+		{header:'amount_type', name:'amountType', index:'a.amount_type', width:150, align:"left"},
+		{header:'amount_description', name:'amountDescription', index:'a.amount_description', width:150, align:"left"},
+		{header:'amount', name:'amount', index:'a.amount', width:150, align:"left"},
+		{header:'fulfillment_id', name:'fulfillmentId', index:'a.fulfillment_id', width:150, align:"left"},
+		{header:'posted_date', name:'postedDate', index:'a.posted_date', width:150, align:"left"},
+		{header:'posted_date_time', name:'postedDateTime', index:'a.posted_date_time', width:150, align:"left"},
+		{header:'order_item_code', name:'orderItemCode', index:'a.order_item_code', width:150, align:"left"},
+		{header:'merchant_order_item_id', name:'merchantOrderItemId', index:'a.merchant_order_item_id', width:150, align:"left"},
+		{header:'merchant_adjustment_item_id', name:'merchantAdjustmentItemId', index:'a.merchant_adjustment_item_id', width:150, align:"left"},
+		{header:'sku', name:'sku', index:'a.sku', width:150, align:"left"},
+		{header:'quantity_purchased', name:'quantityPurchased', index:'a.quantity_purchased', width:150, align:"left"},
+		{header:'promotion_id', name:'promotionId', index:'a.promotion_id', width:150, align:"left"},
+		{header:'status', name:'status', index:'a.status', width:150, align:"center", formatter: function(val, obj, row, act){
+			return js.getDictLabel(${@DictUtils.getDictListJson('sys_search_status')}, val, '${text('未知')}', true);
+		}},
+		{header:'create_date', name:'createDate', index:'a.create_date', width:150, align:"center"},
+		{header:'remarks', name:'remarks', index:'a.remarks', width:150, align:"left"},
+		{header:'${text('操作')}', name:'actions', width:120, sortable:false, title:false, formatter: function(val, obj, row, act){
+			var actions = [];
+			<% if(hasPermi('settlement:settlementReport:edit')){ %>
+				actions.push('<a href="${ctx}/settlement/settlementReport/form?code='+row.code+'" class="btnList" title="${text('编辑settlement_report')}"><i class="fa fa-pencil"></i></a>&nbsp;');
+				actions.push('<a href="${ctx}/settlement/settlementReport/delete?code='+row.code+'" class="btnList" title="${text('删除settlement_report')}" data-confirm="${text('确认要删除该settlement_report吗？')}"><i class="fa fa-trash-o"></i></a>&nbsp;');
+			<% } %>
+			return actions.join('');
+		}}
+	],
+	// 加载成功后执行事件
+	ajaxSuccess: function(data){
+		
+	}
+});
+</script>

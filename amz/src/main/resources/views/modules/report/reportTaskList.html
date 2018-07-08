@@ -1,0 +1,193 @@
+<% layout('/layouts/default.html', {title: 'report_task管理', libs: ['dataGrid']}){ %>
+<div class="main-content">
+	<div class="box box-main">
+		<div class="box-header">
+			<div class="box-title">
+				<i class="fa fa-list-alt"></i> ${text('report_task管理')}
+			</div>
+			<div class="box-tools pull-right">
+				<a href="#" class="btn btn-default" id="btnSearch" title="${text('查询')}"><i class="fa fa-filter"></i> ${text('查询')}</a>
+				<% if(hasPermi('report:reportTask:edit')){ %>
+					<a href="${ctx}/report/reportTask/form" class="btn btn-default btnTool" title="${text('新增report_task')}"><i class="fa fa-plus"></i> ${text('新增')}</a>
+				<% } %>
+			</div>
+		</div>
+		<div class="box-body">
+			<#form:form id="searchForm" model="${reportTask}" action="${ctx}/report/reportTask/listData" method="post" class="form-inline hide"
+					data-page-no="${parameter.pageNo}" data-page-size="${parameter.pageSize}" data-order-by="${parameter.orderBy}">
+				<div class="form-group">
+					<label class="control-label">店铺编码：</label>
+					<div class="control-inline">
+						<#form:input path="storeCode" maxlength="64" class="form-control width-120"/>
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="control-label">任务名称：</label>
+					<div class="control-inline">
+						<#form:input path="taskName" maxlength="255" class="form-control width-120"/>
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="control-label">报告类型：</label>
+					<div class="control-inline">
+						<#form:input path="reportType" maxlength="100" class="form-control width-120"/>
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="control-label">开始日期：</label>
+					<div class="control-inline">
+						<#form:input path="start" maxlength="64" class="form-control width-120"/>
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="control-label">结束日期：</label>
+					<div class="control-inline">
+						<#form:input path="end" maxlength="64" class="form-control width-120"/>
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="control-label">报告参数：</label>
+					<div class="control-inline">
+						<#form:input path="reportOptions" maxlength="255" class="form-control width-120"/>
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="control-label">市场列表：</label>
+					<div class="control-inline">
+						<#form:input path="marketplaceIdList" maxlength="255" class="form-control width-120"/>
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="control-label">请求ID：</label>
+					<div class="control-inline">
+						<#form:input path="reportRequestId" maxlength="32" class="form-control width-120"/>
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="control-label">是否定时：</label>
+					<div class="control-inline">
+						<#form:input path="scheduled" maxlength="1" class="form-control width-120"/>
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="control-label">提交日期：</label>
+					<div class="control-inline">
+						<#form:input path="submitted" maxlength="64" class="form-control width-120"/>
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="control-label">报告处理状态：</label>
+					<div class="control-inline">
+						<#form:input path="reportProcessingStatus" maxlength="32" class="form-control width-120"/>
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="control-label">完成日期：</label>
+					<div class="control-inline">
+						<#form:input path="complete" maxlength="64" class="form-control width-120"/>
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="control-label">报告ID：</label>
+					<div class="control-inline">
+						<#form:input path="reportId" maxlength="32" class="form-control width-120"/>
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="control-label">生效时间：</label>
+					<div class="control-inline">
+						<#form:input path="avaliable" maxlength="64" class="form-control width-120"/>
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="control-label">是否确认：</label>
+					<div class="control-inline">
+						<#form:input path="acknowledged" maxlength="1" class="form-control width-120"/>
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="control-label">文件名称：</label>
+					<div class="control-inline">
+						<#form:input path="filename" maxlength="255" class="form-control width-120"/>
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="control-label">是否导入：</label>
+					<div class="control-inline">
+						<#form:input path="imported" maxlength="1" class="form-control width-120"/>
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="control-label">是否归档：</label>
+					<div class="control-inline">
+						<#form:input path="packaged" maxlength="1" class="form-control width-120"/>
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="control-label">status：</label>
+					<div class="control-inline width-120">
+						<#form:select path="status" dictType="sys_search_status" blankOption="true" class="form-control"/>
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="control-label">备注：</label>
+					<div class="control-inline">
+						<#form:input path="remarks" maxlength="255" class="form-control width-120"/>
+					</div>
+				</div>
+				<div class="form-group">
+					<button type="submit" class="btn btn-primary btn-sm">${text('查询')}</button>
+					<button type="reset" class="btn btn-default btn-sm">${text('重置')}</button>
+				</div>
+			</#form:form>
+			<table id="dataGrid"></table>
+			<div id="dataGridPage"></div>
+		</div>
+	</div>
+</div>
+<% } %>
+<script>
+// 初始化DataGrid对象
+$('#dataGrid').dataGrid({
+	searchForm: $("#searchForm"),
+	columnModel: [
+		{header:'店铺编码', name:'storeCode', index:'a.store_code', width:150, align:"left", frozen:true, formatter: function(val, obj, row, act){
+			return '<a href="${ctx}/report/reportTask/form?code='+row.code+'" class="btnList" data-title="${text('编辑report_task')}">'+(val||row.id)+'</a>';
+		}},
+		{header:'任务名称', name:'taskName', index:'a.task_name', width:150, align:"left"},
+		{header:'报告类型', name:'reportType', index:'a.report_type', width:150, align:"left"},
+		{header:'开始日期', name:'start', index:'a.start', width:150, align:"left"},
+		{header:'结束日期', name:'end', index:'a.end', width:150, align:"left"},
+		{header:'报告参数', name:'reportOptions', index:'a.report_options', width:150, align:"left"},
+		{header:'市场列表', name:'marketplaceIdList', index:'a.marketplace_id_list', width:150, align:"left"},
+		{header:'请求ID', name:'reportRequestId', index:'a.report_request_id', width:150, align:"left"},
+		{header:'是否定时', name:'scheduled', index:'a.scheduled', width:150, align:"left"},
+		{header:'提交日期', name:'submitted', index:'a.submitted', width:150, align:"left"},
+		{header:'报告处理状态', name:'reportProcessingStatus', index:'a.report_processing_status', width:150, align:"left"},
+		{header:'完成日期', name:'complete', index:'a.complete', width:150, align:"left"},
+		{header:'报告ID', name:'reportId', index:'a.report_id', width:150, align:"left"},
+		{header:'生效时间', name:'avaliable', index:'a.avaliable', width:150, align:"left"},
+		{header:'是否确认', name:'acknowledged', index:'a.acknowledged', width:150, align:"left"},
+		{header:'文件名称', name:'filename', index:'a.filename', width:150, align:"left"},
+		{header:'是否导入', name:'imported', index:'a.imported', width:150, align:"left"},
+		{header:'是否归档', name:'packaged', index:'a.packaged', width:150, align:"left"},
+		{header:'status', name:'status', index:'a.status', width:150, align:"center", formatter: function(val, obj, row, act){
+			return js.getDictLabel(${@DictUtils.getDictListJson('sys_search_status')}, val, '${text('未知')}', true);
+		}},
+		{header:'create_date', name:'createDate', index:'a.create_date', width:150, align:"center"},
+		{header:'备注', name:'remarks', index:'a.remarks', width:150, align:"left"},
+		{header:'${text('操作')}', name:'actions', width:120, sortable:false, title:false, formatter: function(val, obj, row, act){
+			var actions = [];
+			<% if(hasPermi('report:reportTask:edit')){ %>
+				actions.push('<a href="${ctx}/report/reportTask/form?code='+row.code+'" class="btnList" title="${text('编辑report_task')}"><i class="fa fa-pencil"></i></a>&nbsp;');
+				actions.push('<a href="${ctx}/report/reportTask/delete?code='+row.code+'" class="btnList" title="${text('删除report_task')}" data-confirm="${text('确认要删除该report_task吗？')}"><i class="fa fa-trash-o"></i></a>&nbsp;');
+			<% } %>
+			return actions.join('');
+		}}
+	],
+	// 加载成功后执行事件
+	ajaxSuccess: function(data){
+		
+	}
+});
+</script>

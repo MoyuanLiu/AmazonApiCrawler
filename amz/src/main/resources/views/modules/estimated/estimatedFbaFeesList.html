@@ -1,0 +1,256 @@
+<% layout('/layouts/default.html', {title: 'estimated_fba_fees管理', libs: ['dataGrid']}){ %>
+<div class="main-content">
+	<div class="box box-main">
+		<div class="box-header">
+			<div class="box-title">
+				<i class="fa fa-list-alt"></i> ${text('estimated_fba_fees管理')}
+			</div>
+			<div class="box-tools pull-right">
+				<a href="#" class="btn btn-default" id="btnSearch" title="${text('查询')}"><i class="fa fa-filter"></i> ${text('查询')}</a>
+				<% if(hasPermi('estimated:estimatedFbaFees:edit')){ %>
+					<a href="${ctx}/estimated/estimatedFbaFees/form" class="btn btn-default btnTool" title="${text('新增estimated_fba_fees')}"><i class="fa fa-plus"></i> ${text('新增')}</a>
+				<% } %>
+			</div>
+		</div>
+		<div class="box-body">
+			<#form:form id="searchForm" model="${estimatedFbaFees}" action="${ctx}/estimated/estimatedFbaFees/listData" method="post" class="form-inline hide"
+					data-page-no="${parameter.pageNo}" data-page-size="${parameter.pageSize}" data-order-by="${parameter.orderBy}">
+				<div class="form-group">
+					<label class="control-label">task_code：</label>
+					<div class="control-inline">
+						<#form:input path="taskCode" maxlength="255" class="form-control width-120"/>
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="control-label">store_name：</label>
+					<div class="control-inline">
+						<#form:input path="storeName" maxlength="255" class="form-control width-120"/>
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="control-label">status：</label>
+					<div class="control-inline width-120">
+						<#form:select path="status" dictType="sys_search_status" blankOption="true" class="form-control"/>
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="control-label">remarks：</label>
+					<div class="control-inline">
+						<#form:input path="remarks" maxlength="255" class="form-control width-120"/>
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="control-label">sku：</label>
+					<div class="control-inline">
+						<#form:input path="sku" maxlength="255" class="form-control width-120"/>
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="control-label">fnsku：</label>
+					<div class="control-inline">
+						<#form:input path="fnsku" maxlength="255" class="form-control width-120"/>
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="control-label">asin：</label>
+					<div class="control-inline">
+						<#form:input path="asin" maxlength="255" class="form-control width-120"/>
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="control-label">product_name：</label>
+					<div class="control-inline">
+						<#form:input path="productName" maxlength="255" class="form-control width-120"/>
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="control-label">product_group：</label>
+					<div class="control-inline">
+						<#form:input path="productGroup" maxlength="255" class="form-control width-120"/>
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="control-label">brand：</label>
+					<div class="control-inline">
+						<#form:input path="brand" maxlength="255" class="form-control width-120"/>
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="control-label">fulfilled_by：</label>
+					<div class="control-inline">
+						<#form:input path="fulfilledBy" maxlength="255" class="form-control width-120"/>
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="control-label">your_price：</label>
+					<div class="control-inline">
+						<#form:input path="yourPrice" maxlength="255" class="form-control width-120"/>
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="control-label">sales_price：</label>
+					<div class="control-inline">
+						<#form:input path="salesPrice" maxlength="255" class="form-control width-120"/>
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="control-label">longest_side：</label>
+					<div class="control-inline">
+						<#form:input path="longestSide" maxlength="255" class="form-control width-120"/>
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="control-label">median_side：</label>
+					<div class="control-inline">
+						<#form:input path="medianSide" maxlength="255" class="form-control width-120"/>
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="control-label">shortest_side：</label>
+					<div class="control-inline">
+						<#form:input path="shortestSide" maxlength="255" class="form-control width-120"/>
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="control-label">length_and_girth：</label>
+					<div class="control-inline">
+						<#form:input path="lengthAndGirth" maxlength="255" class="form-control width-120"/>
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="control-label">unit_of_dimension：</label>
+					<div class="control-inline">
+						<#form:input path="unitOfDimension" maxlength="255" class="form-control width-120"/>
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="control-label">item_package_weight：</label>
+					<div class="control-inline">
+						<#form:input path="itemPackageWeight" maxlength="255" class="form-control width-120"/>
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="control-label">unit_of_weight：</label>
+					<div class="control-inline">
+						<#form:input path="unitOfWeight" maxlength="255" class="form-control width-120"/>
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="control-label">product_size_tier：</label>
+					<div class="control-inline">
+						<#form:input path="productSizeTier" maxlength="255" class="form-control width-120"/>
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="control-label">currency：</label>
+					<div class="control-inline">
+						<#form:input path="currency" maxlength="255" class="form-control width-120"/>
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="control-label">estimated_fee_total：</label>
+					<div class="control-inline">
+						<#form:input path="estimatedFeeTotal" maxlength="255" class="form-control width-120"/>
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="control-label">estimated_referral_fee_per_unit：</label>
+					<div class="control-inline">
+						<#form:input path="estimatedReferralFeePerUnit" maxlength="255" class="form-control width-120"/>
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="control-label">estimated_variable_closing_fee：</label>
+					<div class="control-inline">
+						<#form:input path="estimatedVariableClosingFee" maxlength="255" class="form-control width-120"/>
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="control-label">estimated_order_handling_fee_per_order：</label>
+					<div class="control-inline">
+						<#form:input path="estimatedOrderHandlingFeePerOrder" maxlength="255" class="form-control width-120"/>
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="control-label">estimated_pick_pack_fee_per_unit：</label>
+					<div class="control-inline">
+						<#form:input path="estimatedPickPackFeePerUnit" maxlength="255" class="form-control width-120"/>
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="control-label">estimated_weight_handling_fee_per_unit：</label>
+					<div class="control-inline">
+						<#form:input path="estimatedWeightHandlingFeePerUnit" maxlength="255" class="form-control width-120"/>
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="control-label">expected_fulfillment_fee_per_unit：</label>
+					<div class="control-inline">
+						<#form:input path="expectedFulfillmentFeePerUnit" maxlength="255" class="form-control width-120"/>
+					</div>
+				</div>
+				<div class="form-group">
+					<button type="submit" class="btn btn-primary btn-sm">${text('查询')}</button>
+					<button type="reset" class="btn btn-default btn-sm">${text('重置')}</button>
+				</div>
+			</#form:form>
+			<table id="dataGrid"></table>
+			<div id="dataGridPage"></div>
+		</div>
+	</div>
+</div>
+<% } %>
+<script>
+// 初始化DataGrid对象
+$('#dataGrid').dataGrid({
+	searchForm: $("#searchForm"),
+	columnModel: [
+		{header:'task_code', name:'taskCode', index:'a.task_code', width:150, align:"left", frozen:true, formatter: function(val, obj, row, act){
+			return '<a href="${ctx}/estimated/estimatedFbaFees/form?code='+row.code+'" class="btnList" data-title="${text('编辑estimated_fba_fees')}">'+(val||row.id)+'</a>';
+		}},
+		{header:'store_name', name:'storeName', index:'a.store_name', width:150, align:"left"},
+		{header:'status', name:'status', index:'a.status', width:150, align:"center", formatter: function(val, obj, row, act){
+			return js.getDictLabel(${@DictUtils.getDictListJson('sys_search_status')}, val, '${text('未知')}', true);
+		}},
+		{header:'create_date', name:'createDate', index:'a.create_date', width:150, align:"left"},
+		{header:'remarks', name:'remarks', index:'a.remarks', width:150, align:"left"},
+		{header:'sku', name:'sku', index:'a.sku', width:150, align:"left"},
+		{header:'fnsku', name:'fnsku', index:'a.fnsku', width:150, align:"left"},
+		{header:'asin', name:'asin', index:'a.asin', width:150, align:"left"},
+		{header:'product_name', name:'productName', index:'a.product_name', width:150, align:"left"},
+		{header:'product_group', name:'productGroup', index:'a.product_group', width:150, align:"left"},
+		{header:'brand', name:'brand', index:'a.brand', width:150, align:"left"},
+		{header:'fulfilled_by', name:'fulfilledBy', index:'a.fulfilled_by', width:150, align:"left"},
+		{header:'your_price', name:'yourPrice', index:'a.your_price', width:150, align:"left"},
+		{header:'sales_price', name:'salesPrice', index:'a.sales_price', width:150, align:"left"},
+		{header:'longest_side', name:'longestSide', index:'a.longest_side', width:150, align:"left"},
+		{header:'median_side', name:'medianSide', index:'a.median_side', width:150, align:"left"},
+		{header:'shortest_side', name:'shortestSide', index:'a.shortest_side', width:150, align:"left"},
+		{header:'length_and_girth', name:'lengthAndGirth', index:'a.length_and_girth', width:150, align:"left"},
+		{header:'unit_of_dimension', name:'unitOfDimension', index:'a.unit_of_dimension', width:150, align:"left"},
+		{header:'item_package_weight', name:'itemPackageWeight', index:'a.item_package_weight', width:150, align:"left"},
+		{header:'unit_of_weight', name:'unitOfWeight', index:'a.unit_of_weight', width:150, align:"left"},
+		{header:'product_size_tier', name:'productSizeTier', index:'a.product_size_tier', width:150, align:"left"},
+		{header:'currency', name:'currency', index:'a.currency', width:150, align:"left"},
+		{header:'estimated_fee_total', name:'estimatedFeeTotal', index:'a.estimated_fee_total', width:150, align:"left"},
+		{header:'estimated_referral_fee_per_unit', name:'estimatedReferralFeePerUnit', index:'a.estimated_referral_fee_per_unit', width:150, align:"left"},
+		{header:'estimated_variable_closing_fee', name:'estimatedVariableClosingFee', index:'a.estimated_variable_closing_fee', width:150, align:"left"},
+		{header:'estimated_order_handling_fee_per_order', name:'estimatedOrderHandlingFeePerOrder', index:'a.estimated_order_handling_fee_per_order', width:150, align:"left"},
+		{header:'estimated_pick_pack_fee_per_unit', name:'estimatedPickPackFeePerUnit', index:'a.estimated_pick_pack_fee_per_unit', width:150, align:"left"},
+		{header:'estimated_weight_handling_fee_per_unit', name:'estimatedWeightHandlingFeePerUnit', index:'a.estimated_weight_handling_fee_per_unit', width:150, align:"left"},
+		{header:'expected_fulfillment_fee_per_unit', name:'expectedFulfillmentFeePerUnit', index:'a.expected_fulfillment_fee_per_unit', width:150, align:"left"},
+		{header:'${text('操作')}', name:'actions', width:120, sortable:false, title:false, formatter: function(val, obj, row, act){
+			var actions = [];
+			<% if(hasPermi('estimated:estimatedFbaFees:edit')){ %>
+				actions.push('<a href="${ctx}/estimated/estimatedFbaFees/form?code='+row.code+'" class="btnList" title="${text('编辑estimated_fba_fees')}"><i class="fa fa-pencil"></i></a>&nbsp;');
+				actions.push('<a href="${ctx}/estimated/estimatedFbaFees/delete?code='+row.code+'" class="btnList" title="${text('删除estimated_fba_fees')}" data-confirm="${text('确认要删除该estimated_fba_fees吗？')}"><i class="fa fa-trash-o"></i></a>&nbsp;');
+			<% } %>
+			return actions.join('');
+		}}
+	],
+	// 加载成功后执行事件
+	ajaxSuccess: function(data){
+		
+	}
+});
+</script>

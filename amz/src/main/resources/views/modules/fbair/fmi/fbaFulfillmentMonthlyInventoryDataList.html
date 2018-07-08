@@ -1,0 +1,144 @@
+<% layout('/layouts/default.html', {title: 'fba_fulfillment_monthly_inventory_data管理', libs: ['dataGrid']}){ %>
+<div class="main-content">
+	<div class="box box-main">
+		<div class="box-header">
+			<div class="box-title">
+				<i class="fa fa-list-alt"></i> ${text('fba_fulfillment_monthly_inventory_data管理')}
+			</div>
+			<div class="box-tools pull-right">
+				<a href="#" class="btn btn-default" id="btnSearch" title="${text('查询')}"><i class="fa fa-filter"></i> ${text('查询')}</a>
+				<% if(hasPermi('fbair:fmi:fbaFulfillmentMonthlyInventoryData:edit')){ %>
+					<a href="${ctx}/fbair/fmi/fbaFulfillmentMonthlyInventoryData/form" class="btn btn-default btnTool" title="${text('新增fba_fulfillment_monthly_inventory_data')}"><i class="fa fa-plus"></i> ${text('新增')}</a>
+				<% } %>
+			</div>
+		</div>
+		<div class="box-body">
+			<#form:form id="searchForm" model="${fbaFulfillmentMonthlyInventoryData}" action="${ctx}/fbair/fmi/fbaFulfillmentMonthlyInventoryData/listData" method="post" class="form-inline hide"
+					data-page-no="${parameter.pageNo}" data-page-size="${parameter.pageSize}" data-order-by="${parameter.orderBy}">
+				<div class="form-group">
+					<label class="control-label">month：</label>
+					<div class="control-inline">
+						<#form:input path="month" maxlength="32" class="form-control width-120"/>
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="control-label">task_code：</label>
+					<div class="control-inline">
+						<#form:input path="taskCode" maxlength="64" class="form-control width-120"/>
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="control-label">fnsku：</label>
+					<div class="control-inline">
+						<#form:input path="fnsku" maxlength="32" class="form-control width-120"/>
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="control-label">store_name：</label>
+					<div class="control-inline">
+						<#form:input path="storeName" maxlength="255" class="form-control width-120"/>
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="control-label">sku：</label>
+					<div class="control-inline">
+						<#form:input path="sku" maxlength="32" class="form-control width-120"/>
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="control-label">product_name：</label>
+					<div class="control-inline">
+						<#form:input path="productName" maxlength="255" class="form-control width-120"/>
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="control-label">average_quantity：</label>
+					<div class="control-inline">
+						<#form:input path="averageQuantity" maxlength="32" class="form-control width-120"/>
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="control-label">end_quantity：</label>
+					<div class="control-inline">
+						<#form:input path="endQuantity" maxlength="32" class="form-control width-120"/>
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="control-label">fulfillment_center_id：</label>
+					<div class="control-inline">
+						<#form:input path="fulfillmentCenterId" maxlength="32" class="form-control width-120"/>
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="control-label">detailed_disposition：</label>
+					<div class="control-inline">
+						<#form:input path="detailedDisposition" maxlength="32" class="form-control width-120"/>
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="control-label">country：</label>
+					<div class="control-inline">
+						<#form:input path="country" maxlength="32" class="form-control width-120"/>
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="control-label">status：</label>
+					<div class="control-inline width-120">
+						<#form:select path="status" dictType="sys_search_status" blankOption="true" class="form-control"/>
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="control-label">remarks：</label>
+					<div class="control-inline">
+						<#form:input path="remarks" maxlength="255" class="form-control width-120"/>
+					</div>
+				</div>
+				<div class="form-group">
+					<button type="submit" class="btn btn-primary btn-sm">${text('查询')}</button>
+					<button type="reset" class="btn btn-default btn-sm">${text('重置')}</button>
+				</div>
+			</#form:form>
+			<table id="dataGrid"></table>
+			<div id="dataGridPage"></div>
+		</div>
+	</div>
+</div>
+<% } %>
+<script>
+// 初始化DataGrid对象
+$('#dataGrid').dataGrid({
+	searchForm: $("#searchForm"),
+	columnModel: [
+		{header:'month', name:'month', index:'a.month', width:150, align:"left", frozen:true, formatter: function(val, obj, row, act){
+			return '<a href="${ctx}/fbair/fmi/fbaFulfillmentMonthlyInventoryData/form?code='+row.code+'" class="btnList" data-title="${text('编辑fba_fulfillment_monthly_inventory_data')}">'+(val||row.id)+'</a>';
+		}},
+		{header:'task_code', name:'taskCode', index:'a.task_code', width:150, align:"left"},
+		{header:'fnsku', name:'fnsku', index:'a.fnsku', width:150, align:"left"},
+		{header:'store_name', name:'storeName', index:'a.store_name', width:150, align:"left"},
+		{header:'sku', name:'sku', index:'a.sku', width:150, align:"left"},
+		{header:'product_name', name:'productName', index:'a.product_name', width:150, align:"left"},
+		{header:'average_quantity', name:'averageQuantity', index:'a.average_quantity', width:150, align:"left"},
+		{header:'end_quantity', name:'endQuantity', index:'a.end_quantity', width:150, align:"left"},
+		{header:'fulfillment_center_id', name:'fulfillmentCenterId', index:'a.fulfillment_center_id', width:150, align:"left"},
+		{header:'detailed_disposition', name:'detailedDisposition', index:'a.detailed_disposition', width:150, align:"left"},
+		{header:'country', name:'country', index:'a.country', width:150, align:"left"},
+		{header:'status', name:'status', index:'a.status', width:150, align:"center", formatter: function(val, obj, row, act){
+			return js.getDictLabel(${@DictUtils.getDictListJson('sys_search_status')}, val, '${text('未知')}', true);
+		}},
+		{header:'create_date', name:'createDate', index:'a.create_date', width:150, align:"center"},
+		{header:'remarks', name:'remarks', index:'a.remarks', width:150, align:"left"},
+		{header:'${text('操作')}', name:'actions', width:120, sortable:false, title:false, formatter: function(val, obj, row, act){
+			var actions = [];
+			<% if(hasPermi('fbair:fmi:fbaFulfillmentMonthlyInventoryData:edit')){ %>
+				actions.push('<a href="${ctx}/fbair/fmi/fbaFulfillmentMonthlyInventoryData/form?code='+row.code+'" class="btnList" title="${text('编辑fba_fulfillment_monthly_inventory_data')}"><i class="fa fa-pencil"></i></a>&nbsp;');
+				actions.push('<a href="${ctx}/fbair/fmi/fbaFulfillmentMonthlyInventoryData/delete?code='+row.code+'" class="btnList" title="${text('删除fba_fulfillment_monthly_inventory_data')}" data-confirm="${text('确认要删除该fba_fulfillment_monthly_inventory_data吗？')}"><i class="fa fa-trash-o"></i></a>&nbsp;');
+			<% } %>
+			return actions.join('');
+		}}
+	],
+	// 加载成功后执行事件
+	ajaxSuccess: function(data){
+		
+	}
+});
+</script>

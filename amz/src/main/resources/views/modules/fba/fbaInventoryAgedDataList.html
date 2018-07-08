@@ -1,0 +1,312 @@
+<% layout('/layouts/default.html', {title: 'fba_inventory_aged_data管理', libs: ['dataGrid']}){ %>
+<div class="main-content">
+	<div class="box box-main">
+		<div class="box-header">
+			<div class="box-title">
+				<i class="fa fa-list-alt"></i> ${text('fba_inventory_aged_data管理')}
+			</div>
+			<div class="box-tools pull-right">
+				<a href="#" class="btn btn-default" id="btnSearch" title="${text('查询')}"><i class="fa fa-filter"></i> ${text('查询')}</a>
+				<% if(hasPermi('fba:fbaInventoryAgedData:edit')){ %>
+					<a href="${ctx}/fba/fbaInventoryAgedData/form" class="btn btn-default btnTool" title="${text('新增fba_inventory_aged_data')}"><i class="fa fa-plus"></i> ${text('新增')}</a>
+				<% } %>
+			</div>
+		</div>
+		<div class="box-body">
+			<#form:form id="searchForm" model="${fbaInventoryAgedData}" action="${ctx}/fba/fbaInventoryAgedData/listData" method="post" class="form-inline hide"
+					data-page-no="${parameter.pageNo}" data-page-size="${parameter.pageSize}" data-order-by="${parameter.orderBy}">
+				<div class="form-group">
+					<label class="control-label">task_code：</label>
+					<div class="control-inline">
+						<#form:input path="taskCode" maxlength="255" class="form-control width-120"/>
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="control-label">store_name：</label>
+					<div class="control-inline">
+						<#form:input path="storeName" maxlength="255" class="form-control width-120"/>
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="control-label">status：</label>
+					<div class="control-inline width-120">
+						<#form:select path="status" dictType="sys_search_status" blankOption="true" class="form-control"/>
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="control-label">remarks：</label>
+					<div class="control-inline">
+						<#form:input path="remarks" maxlength="255" class="form-control width-120"/>
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="control-label">snapshot_date：</label>
+					<div class="control-inline">
+						<#form:input path="snapshotDate" maxlength="255" class="form-control width-120"/>
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="control-label">sku：</label>
+					<div class="control-inline">
+						<#form:input path="sku" maxlength="255" class="form-control width-120"/>
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="control-label">fnsku：</label>
+					<div class="control-inline">
+						<#form:input path="fnsku" maxlength="255" class="form-control width-120"/>
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="control-label">asin：</label>
+					<div class="control-inline">
+						<#form:input path="asin" maxlength="255" class="form-control width-120"/>
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="control-label">product_name：</label>
+					<div class="control-inline">
+						<#form:input path="productName" maxlength="255" class="form-control width-120"/>
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="control-label">condition：</label>
+					<div class="control-inline">
+						<#form:input path="condition" maxlength="255" class="form-control width-120"/>
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="control-label">avaliable_quantity_sellable：</label>
+					<div class="control-inline">
+						<#form:input path="avaliableQuantitySellable" maxlength="255" class="form-control width-120"/>
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="control-label">qty_with_removals_in_progress：</label>
+					<div class="control-inline">
+						<#form:input path="qtyWithRemovalsInProgress" maxlength="255" class="form-control width-120"/>
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="control-label">inv_age_0_to_90_days：</label>
+					<div class="control-inline">
+						<#form:input path="invAge0To90Days" maxlength="255" class="form-control width-120"/>
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="control-label">inv_age_91_to_180_days：</label>
+					<div class="control-inline">
+						<#form:input path="invAge91To180Days" maxlength="255" class="form-control width-120"/>
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="control-label">inv_age_181_to_270_days：</label>
+					<div class="control-inline">
+						<#form:input path="invAge181To270Days" maxlength="255" class="form-control width-120"/>
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="control-label">inv_age_271_to_365_days：</label>
+					<div class="control-inline">
+						<#form:input path="invAge271To365Days" maxlength="255" class="form-control width-120"/>
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="control-label">inv_age_365_plus_days：</label>
+					<div class="control-inline">
+						<#form:input path="invAge365PlusDays" maxlength="255" class="form-control width-120"/>
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="control-label">currency：</label>
+					<div class="control-inline">
+						<#form:input path="currency" maxlength="255" class="form-control width-120"/>
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="control-label">qty_to_be_charged_ltsf_6_mo：</label>
+					<div class="control-inline">
+						<#form:input path="qtyToBeChargedLtsf6Mo" maxlength="255" class="form-control width-120"/>
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="control-label">projected_ltsf_6_mo：</label>
+					<div class="control-inline">
+						<#form:input path="projectedLtsf6Mo" maxlength="255" class="form-control width-120"/>
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="control-label">qty_to_be_charged_ltsf_12_mo：</label>
+					<div class="control-inline">
+						<#form:input path="qtyToBeChargedLtsf12Mo" maxlength="255" class="form-control width-120"/>
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="control-label">projected_ltsf_12_mo：</label>
+					<div class="control-inline">
+						<#form:input path="projectedLtsf12Mo" maxlength="255" class="form-control width-120"/>
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="control-label">units_shipped_last_7_days：</label>
+					<div class="control-inline">
+						<#form:input path="unitsShippedLast7Days" maxlength="255" class="form-control width-120"/>
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="control-label">units_shipped_last_30_days：</label>
+					<div class="control-inline">
+						<#form:input path="unitsShippedLast30Days" maxlength="255" class="form-control width-120"/>
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="control-label">units_shipped_last_60_days：</label>
+					<div class="control-inline">
+						<#form:input path="unitsShippedLast60Days" maxlength="255" class="form-control width-120"/>
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="control-label">units_shipped_last_90_days：</label>
+					<div class="control-inline">
+						<#form:input path="unitsShippedLast90Days" maxlength="255" class="form-control width-120"/>
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="control-label">alert：</label>
+					<div class="control-inline">
+						<#form:input path="alert" maxlength="255" class="form-control width-120"/>
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="control-label">your_price：</label>
+					<div class="control-inline">
+						<#form:input path="yourPrice" maxlength="255" class="form-control width-120"/>
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="control-label">sales_price：</label>
+					<div class="control-inline">
+						<#form:input path="salesPrice" maxlength="255" class="form-control width-120"/>
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="control-label">lowest_price_new：</label>
+					<div class="control-inline">
+						<#form:input path="lowestPriceNew" maxlength="255" class="form-control width-120"/>
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="control-label">lowest_price_used：</label>
+					<div class="control-inline">
+						<#form:input path="lowestPriceUsed" maxlength="255" class="form-control width-120"/>
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="control-label">recommended_action：</label>
+					<div class="control-inline">
+						<#form:input path="recommendedAction" maxlength="255" class="form-control width-120"/>
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="control-label">healthy_inventory_level：</label>
+					<div class="control-inline">
+						<#form:input path="healthyInventoryLevel" maxlength="255" class="form-control width-120"/>
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="control-label">recommended_sales_price：</label>
+					<div class="control-inline">
+						<#form:input path="recommendedSalesPrice" maxlength="255" class="form-control width-120"/>
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="control-label">recommended_sale_duration_days：</label>
+					<div class="control-inline">
+						<#form:input path="recommendedSaleDurationDays" maxlength="255" class="form-control width-120"/>
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="control-label">recommended_removal_quantity：</label>
+					<div class="control-inline">
+						<#form:input path="recommendedRemovalQuantity" maxlength="255" class="form-control width-120"/>
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="control-label">estimated_cost_savings_of_removal：</label>
+					<div class="control-inline">
+						<#form:input path="estimatedCostSavingsOfRemoval" maxlength="255" class="form-control width-120"/>
+					</div>
+				</div>
+				<div class="form-group">
+					<button type="submit" class="btn btn-primary btn-sm">${text('查询')}</button>
+					<button type="reset" class="btn btn-default btn-sm">${text('重置')}</button>
+				</div>
+			</#form:form>
+			<table id="dataGrid"></table>
+			<div id="dataGridPage"></div>
+		</div>
+	</div>
+</div>
+<% } %>
+<script>
+// 初始化DataGrid对象
+$('#dataGrid').dataGrid({
+	searchForm: $("#searchForm"),
+	columnModel: [
+		{header:'task_code', name:'taskCode', index:'a.task_code', width:150, align:"left", frozen:true, formatter: function(val, obj, row, act){
+			return '<a href="${ctx}/fba/fbaInventoryAgedData/form?code='+row.code+'" class="btnList" data-title="${text('编辑fba_inventory_aged_data')}">'+(val||row.id)+'</a>';
+		}},
+		{header:'store_name', name:'storeName', index:'a.store_name', width:150, align:"left"},
+		{header:'status', name:'status', index:'a.status', width:150, align:"center", formatter: function(val, obj, row, act){
+			return js.getDictLabel(${@DictUtils.getDictListJson('sys_search_status')}, val, '${text('未知')}', true);
+		}},
+		{header:'create_date', name:'createDate', index:'a.create_date', width:150, align:"left"},
+		{header:'remarks', name:'remarks', index:'a.remarks', width:150, align:"left"},
+		{header:'snapshot_date', name:'snapshotDate', index:'a.snapshot_date', width:150, align:"left"},
+		{header:'sku', name:'sku', index:'a.sku', width:150, align:"left"},
+		{header:'fnsku', name:'fnsku', index:'a.fnsku', width:150, align:"left"},
+		{header:'asin', name:'asin', index:'a.asin', width:150, align:"left"},
+		{header:'product_name', name:'productName', index:'a.product_name', width:150, align:"left"},
+		{header:'condition', name:'condition', index:'a.condition', width:150, align:"left"},
+		{header:'avaliable_quantity_sellable', name:'avaliableQuantitySellable', index:'a.avaliable_quantity_sellable', width:150, align:"left"},
+		{header:'qty_with_removals_in_progress', name:'qtyWithRemovalsInProgress', index:'a.qty_with_removals_in_progress', width:150, align:"left"},
+		{header:'inv_age_0_to_90_days', name:'invAge0To90Days', index:'a.inv_age_0_to_90_days', width:150, align:"left"},
+		{header:'inv_age_91_to_180_days', name:'invAge91To180Days', index:'a.inv_age_91_to_180_days', width:150, align:"left"},
+		{header:'inv_age_181_to_270_days', name:'invAge181To270Days', index:'a.inv_age_181_to_270_days', width:150, align:"left"},
+		{header:'inv_age_271_to_365_days', name:'invAge271To365Days', index:'a.inv_age_271_to_365_days', width:150, align:"left"},
+		{header:'inv_age_365_plus_days', name:'invAge365PlusDays', index:'a.inv_age_365_plus_days', width:150, align:"left"},
+		{header:'currency', name:'currency', index:'a.currency', width:150, align:"left"},
+		{header:'qty_to_be_charged_ltsf_6_mo', name:'qtyToBeChargedLtsf6Mo', index:'a.qty_to_be_charged_ltsf_6_mo', width:150, align:"left"},
+		{header:'projected_ltsf_6_mo', name:'projectedLtsf6Mo', index:'a.projected_ltsf_6_mo', width:150, align:"left"},
+		{header:'qty_to_be_charged_ltsf_12_mo', name:'qtyToBeChargedLtsf12Mo', index:'a.qty_to_be_charged_ltsf_12_mo', width:150, align:"left"},
+		{header:'projected_ltsf_12_mo', name:'projectedLtsf12Mo', index:'a.projected_ltsf_12_mo', width:150, align:"left"},
+		{header:'units_shipped_last_7_days', name:'unitsShippedLast7Days', index:'a.units_shipped_last_7_days', width:150, align:"left"},
+		{header:'units_shipped_last_30_days', name:'unitsShippedLast30Days', index:'a.units_shipped_last_30_days', width:150, align:"left"},
+		{header:'units_shipped_last_60_days', name:'unitsShippedLast60Days', index:'a.units_shipped_last_60_days', width:150, align:"left"},
+		{header:'units_shipped_last_90_days', name:'unitsShippedLast90Days', index:'a.units_shipped_last_90_days', width:150, align:"left"},
+		{header:'alert', name:'alert', index:'a.alert', width:150, align:"left"},
+		{header:'your_price', name:'yourPrice', index:'a.your_price', width:150, align:"left"},
+		{header:'sales_price', name:'salesPrice', index:'a.sales_price', width:150, align:"left"},
+		{header:'lowest_price_new', name:'lowestPriceNew', index:'a.lowest_price_new', width:150, align:"left"},
+		{header:'lowest_price_used', name:'lowestPriceUsed', index:'a.lowest_price_used', width:150, align:"left"},
+		{header:'recommended_action', name:'recommendedAction', index:'a.recommended_action', width:150, align:"left"},
+		{header:'healthy_inventory_level', name:'healthyInventoryLevel', index:'a.healthy_inventory_level', width:150, align:"left"},
+		{header:'recommended_sales_price', name:'recommendedSalesPrice', index:'a.recommended_sales_price', width:150, align:"left"},
+		{header:'recommended_sale_duration_days', name:'recommendedSaleDurationDays', index:'a.recommended_sale_duration_days', width:150, align:"left"},
+		{header:'recommended_removal_quantity', name:'recommendedRemovalQuantity', index:'a.recommended_removal_quantity', width:150, align:"left"},
+		{header:'estimated_cost_savings_of_removal', name:'estimatedCostSavingsOfRemoval', index:'a.estimated_cost_savings_of_removal', width:150, align:"left"},
+		{header:'${text('操作')}', name:'actions', width:120, sortable:false, title:false, formatter: function(val, obj, row, act){
+			var actions = [];
+			<% if(hasPermi('fba:fbaInventoryAgedData:edit')){ %>
+				actions.push('<a href="${ctx}/fba/fbaInventoryAgedData/form?code='+row.code+'" class="btnList" title="${text('编辑fba_inventory_aged_data')}"><i class="fa fa-pencil"></i></a>&nbsp;');
+				actions.push('<a href="${ctx}/fba/fbaInventoryAgedData/delete?code='+row.code+'" class="btnList" title="${text('删除fba_inventory_aged_data')}" data-confirm="${text('确认要删除该fba_inventory_aged_data吗？')}"><i class="fa fa-trash-o"></i></a>&nbsp;');
+			<% } %>
+			return actions.join('');
+		}}
+	],
+	// 加载成功后执行事件
+	ajaxSuccess: function(data){
+		
+	}
+});
+</script>

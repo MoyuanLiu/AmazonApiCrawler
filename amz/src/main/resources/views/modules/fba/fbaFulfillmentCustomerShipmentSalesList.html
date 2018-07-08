@@ -1,0 +1,179 @@
+<% layout('/layouts/default.html', {title: 'fba_fulfillment_customer_shipment_sales管理', libs: ['dataGrid']}){ %>
+<div class="main-content">
+	<div class="box box-main">
+		<div class="box-header">
+			<div class="box-title">
+				<i class="fa fa-list-alt"></i> ${text('fba_fulfillment_customer_shipment_sales管理')}
+			</div>
+			<div class="box-tools pull-right">
+				<a href="#" class="btn btn-default" id="btnSearch" title="${text('查询')}"><i class="fa fa-filter"></i> ${text('查询')}</a>
+				<% if(hasPermi('fba:fbaFulfillmentCustomerShipmentSales:edit')){ %>
+					<a href="${ctx}/fba/fbaFulfillmentCustomerShipmentSales/form" class="btn btn-default btnTool" title="${text('新增fba_fulfillment_customer_shipment_sales')}"><i class="fa fa-plus"></i> ${text('新增')}</a>
+				<% } %>
+			</div>
+		</div>
+		<div class="box-body">
+			<#form:form id="searchForm" model="${fbaFulfillmentCustomerShipmentSales}" action="${ctx}/fba/fbaFulfillmentCustomerShipmentSales/listData" method="post" class="form-inline hide"
+					data-page-no="${parameter.pageNo}" data-page-size="${parameter.pageSize}" data-order-by="${parameter.orderBy}">
+				<div class="form-group">
+					<label class="control-label">task_code：</label>
+					<div class="control-inline">
+						<#form:input path="taskCode" maxlength="255" class="form-control width-120"/>
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="control-label">store_name：</label>
+					<div class="control-inline">
+						<#form:input path="storeName" maxlength="255" class="form-control width-120"/>
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="control-label">status：</label>
+					<div class="control-inline width-120">
+						<#form:select path="status" dictType="sys_search_status" blankOption="true" class="form-control"/>
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="control-label">remarks：</label>
+					<div class="control-inline">
+						<#form:input path="remarks" maxlength="255" class="form-control width-120"/>
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="control-label">shipment_date：</label>
+					<div class="control-inline">
+						<#form:input path="shipmentDate" maxlength="255" class="form-control width-120"/>
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="control-label">sku：</label>
+					<div class="control-inline">
+						<#form:input path="sku" maxlength="255" class="form-control width-120"/>
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="control-label">fnsku：</label>
+					<div class="control-inline">
+						<#form:input path="fnsku" maxlength="255" class="form-control width-120"/>
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="control-label">asin：</label>
+					<div class="control-inline">
+						<#form:input path="asin" maxlength="255" class="form-control width-120"/>
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="control-label">fulfillment_center_id：</label>
+					<div class="control-inline">
+						<#form:input path="fulfillmentCenterId" maxlength="255" class="form-control width-120"/>
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="control-label">quantity：</label>
+					<div class="control-inline">
+						<#form:input path="quantity" maxlength="255" class="form-control width-120"/>
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="control-label">amazon_order_id：</label>
+					<div class="control-inline">
+						<#form:input path="amazonOrderId" maxlength="255" class="form-control width-120"/>
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="control-label">currency：</label>
+					<div class="control-inline">
+						<#form:input path="currency" maxlength="255" class="form-control width-120"/>
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="control-label">item_price_per_unit：</label>
+					<div class="control-inline">
+						<#form:input path="itemPricePerUnit" maxlength="255" class="form-control width-120"/>
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="control-label">shipping_price：</label>
+					<div class="control-inline">
+						<#form:input path="shippingPrice" maxlength="255" class="form-control width-120"/>
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="control-label">gift_wrap_price：</label>
+					<div class="control-inline">
+						<#form:input path="giftWrapPrice" maxlength="255" class="form-control width-120"/>
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="control-label">ship_city：</label>
+					<div class="control-inline">
+						<#form:input path="shipCity" maxlength="255" class="form-control width-120"/>
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="control-label">ship_state：</label>
+					<div class="control-inline">
+						<#form:input path="shipState" maxlength="255" class="form-control width-120"/>
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="control-label">ship_postal_code：</label>
+					<div class="control-inline">
+						<#form:input path="shipPostalCode" maxlength="255" class="form-control width-120"/>
+					</div>
+				</div>
+				<div class="form-group">
+					<button type="submit" class="btn btn-primary btn-sm">${text('查询')}</button>
+					<button type="reset" class="btn btn-default btn-sm">${text('重置')}</button>
+				</div>
+			</#form:form>
+			<table id="dataGrid"></table>
+			<div id="dataGridPage"></div>
+		</div>
+	</div>
+</div>
+<% } %>
+<script>
+// 初始化DataGrid对象
+$('#dataGrid').dataGrid({
+	searchForm: $("#searchForm"),
+	columnModel: [
+		{header:'task_code', name:'taskCode', index:'a.task_code', width:150, align:"left", frozen:true, formatter: function(val, obj, row, act){
+			return '<a href="${ctx}/fba/fbaFulfillmentCustomerShipmentSales/form?code='+row.code+'" class="btnList" data-title="${text('编辑fba_fulfillment_customer_shipment_sales')}">'+(val||row.id)+'</a>';
+		}},
+		{header:'store_name', name:'storeName', index:'a.store_name', width:150, align:"left"},
+		{header:'status', name:'status', index:'a.status', width:150, align:"center", formatter: function(val, obj, row, act){
+			return js.getDictLabel(${@DictUtils.getDictListJson('sys_search_status')}, val, '${text('未知')}', true);
+		}},
+		{header:'create_date', name:'createDate', index:'a.create_date', width:150, align:"left"},
+		{header:'remarks', name:'remarks', index:'a.remarks', width:150, align:"left"},
+		{header:'shipment_date', name:'shipmentDate', index:'a.shipment_date', width:150, align:"left"},
+		{header:'sku', name:'sku', index:'a.sku', width:150, align:"left"},
+		{header:'fnsku', name:'fnsku', index:'a.fnsku', width:150, align:"left"},
+		{header:'asin', name:'asin', index:'a.asin', width:150, align:"left"},
+		{header:'fulfillment_center_id', name:'fulfillmentCenterId', index:'a.fulfillment_center_id', width:150, align:"left"},
+		{header:'quantity', name:'quantity', index:'a.quantity', width:150, align:"left"},
+		{header:'amazon_order_id', name:'amazonOrderId', index:'a.amazon_order_id', width:150, align:"left"},
+		{header:'currency', name:'currency', index:'a.currency', width:150, align:"left"},
+		{header:'item_price_per_unit', name:'itemPricePerUnit', index:'a.item_price_per_unit', width:150, align:"left"},
+		{header:'shipping_price', name:'shippingPrice', index:'a.shipping_price', width:150, align:"left"},
+		{header:'gift_wrap_price', name:'giftWrapPrice', index:'a.gift_wrap_price', width:150, align:"left"},
+		{header:'ship_city', name:'shipCity', index:'a.ship_city', width:150, align:"left"},
+		{header:'ship_state', name:'shipState', index:'a.ship_state', width:150, align:"left"},
+		{header:'ship_postal_code', name:'shipPostalCode', index:'a.ship_postal_code', width:150, align:"left"},
+		{header:'${text('操作')}', name:'actions', width:120, sortable:false, title:false, formatter: function(val, obj, row, act){
+			var actions = [];
+			<% if(hasPermi('fba:fbaFulfillmentCustomerShipmentSales:edit')){ %>
+				actions.push('<a href="${ctx}/fba/fbaFulfillmentCustomerShipmentSales/form?code='+row.code+'" class="btnList" title="${text('编辑fba_fulfillment_customer_shipment_sales')}"><i class="fa fa-pencil"></i></a>&nbsp;');
+				actions.push('<a href="${ctx}/fba/fbaFulfillmentCustomerShipmentSales/delete?code='+row.code+'" class="btnList" title="${text('删除fba_fulfillment_customer_shipment_sales')}" data-confirm="${text('确认要删除该fba_fulfillment_customer_shipment_sales吗？')}"><i class="fa fa-trash-o"></i></a>&nbsp;');
+			<% } %>
+			return actions.join('');
+		}}
+	],
+	// 加载成功后执行事件
+	ajaxSuccess: function(data){
+		
+	}
+});
+</script>
